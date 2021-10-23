@@ -45,5 +45,29 @@ of Ububutu server long term supp),
 
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
+#Then feel free to run it
+minikube start
+
 ```
 !!! BUT anyway i'm going to use PWK service (https://labs.play-with-k8s.com) to go further
+I did this just to get my legal point for this step (lol)! Here is the scr as proof - https://clck.ru/YQMPG
+
+---
+
+## **4. Deploy the application into the K8S cluster - 3 **
+
+###	•	Сreate Deployment .yaml file with containerized application 
+Go to your docker hub (https://hub.docker.com/repositories) and find out the name of your application. The name of mine is w1ckeds1ck / wa3.
+```bash
+kubectl create deployment wa3 --image=w1ckeds1ck/wa3 --dry-run=client -oyaml
+```
+That's it! This is our manifest-file. Just save it as Deployment,yaml. It can be deployed in furure by putting next command down
+```bash
+kubectl apply -f Deployment.yaml
+```
+###	•	*The deployment requires 3 replicas, “RollingUpdate” strategy. Emulate the “RollingUpdate” strategy by updating docker image. Provide screenshots. Define the liveness and readiness probes to /health endpoint and 8080 port, resources(requests/limits) 
+
+###	•	*Create a “Service” object which exposes Pods with application outside the K8S cluster in order to access each of the replicas through the single IP address/DNS name. 
+
+###	•	*Specify PodDistruptionBudget which defines that only 1 replica can be down. 
+
