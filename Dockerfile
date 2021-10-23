@@ -1,5 +1,5 @@
 #Maintained by Vitali Kuts. Vitalik@playtika.com
-FROM python:3.7-alpine3.14
+FROM python:alpine
 COPY ./application/ /home/appuser/wa3/
 WORKDIR /home/appuser/wa3/
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup && pip3 install --no-cache-dir aiohttp multidict==4.5.2 yarl==1.3.0 && python3 setup.py install
