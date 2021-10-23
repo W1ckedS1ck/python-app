@@ -61,7 +61,7 @@ Go to your docker hub (https://hub.docker.com/repositories) and find out the nam
 ```bash
 kubectl create deployment wa3 --image=w1ckeds1ck/wa3 --dry-run=client -oyaml
 ```
-That's it! This is our manifest-file. Just save it as Deployment,yaml. It can be deployed in furure by putting next command down
+That's it! This is our manifest-file. Just save it as Deployment.yaml (use > to save stdout) . It can be deployed in furure by putting next command down
 ```bash
 kubectl apply -f Deployment.yaml
 ```
@@ -71,3 +71,8 @@ kubectl apply -f Deployment.yaml
 
 ###	•	*Specify PodDistruptionBudget which defines that only 1 replica can be down. 
 
+
+
+---
+PS. Here you can find : docker image size, running docker container, container logs. I ran it on my AWS just for fun.
+![alt text](https://i.ibb.co/8MbTb4D/image.png)
