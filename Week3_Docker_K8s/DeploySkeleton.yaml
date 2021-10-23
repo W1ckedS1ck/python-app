@@ -1,0 +1,21 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: my-web-deployment
+  labels:
+    app : wa3
+spec:
+#  replicas: 3 (will be used later in other task)
+  selector:
+    matchLabels:
+      project: wa3
+  template:
+    metadata:
+      labels:
+        project: kgb
+    spec:
+      containers:
+        - name : wa3
+          image: w1ckeds1ck/wa3
+          ports:
+            - containerPort: 8080
