@@ -3,14 +3,90 @@ kind: Deployment
 metadata:
   annotations:
     deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2021-10-22T19:16:38Z"
+  creationTimestamp: "2021-10-24T10:46:44Z"
   generation: 1
   labels:
     app: wa3
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:app: {}
+          f:spec:
+            f:containers:
+              k:{"name":"wa3"}:
+                .: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-10-24T10:46:44Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-10-24T10:46:53Z"
   name: wa3
   namespace: default
-  resourceVersion: "1123"
-  uid: 73730204-19bb-4dfe-a5e3-e484bb1b2247
+  resourceVersion: "2315"
+  uid: 0dae6d2b-2457-4146-ab9a-775121473bbf
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -44,14 +120,14 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2021-10-22T19:16:46Z"
-    lastUpdateTime: "2021-10-22T19:16:46Z"
+  - lastTransitionTime: "2021-10-24T10:46:53Z"
+    lastUpdateTime: "2021-10-24T10:46:53Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2021-10-22T19:16:38Z"
-    lastUpdateTime: "2021-10-22T19:16:46Z"
+  - lastTransitionTime: "2021-10-24T10:46:44Z"
+    lastUpdateTime: "2021-10-24T10:46:53Z"
     message: ReplicaSet "wa3-84dd756dbc" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
