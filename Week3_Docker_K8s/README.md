@@ -115,7 +115,7 @@ Yaml's can be checked [HERE](https://github.com/W1ckedS1ck/python-app/blob/main/
 
 ###	•	*The deployment requires 3 replicas, “RollingUpdate” strategy. Emulate the “RollingUpdate” strategy by updating docker image. Provide screenshots. Define the liveness and readiness probes to /health endpoint and 8080 port, resources(requests/limits) 
 
-Need 3 replicas? No time to chill, scaling our deploy! NOW!
+Need 3 replicas? Just scaling our deploy! Just do it! NOW!!
 ```bash
  k scale --replicas=3 deploy/wa3
 ```
@@ -127,7 +127,10 @@ Now do release of your outstanding (no) application in container, push it and ch
  docker login -u w1ckeds1ck (here shoud be your token)
  docker push w1ckeds1ck/wa3:v2.0 
 ```
-k set image deploy/wa3 wa3=w1ckeds1ck/wa3:v2.0
+IT'S TIME TO ROLL!
+```bash
+k set image deploy/wa3 wa3=w1ckeds1ck/wa3:v2.0  
+```
 [Here's what you will see](https://github.com/W1ckedS1ck/python-app/blob/main/Week3_Docker_K8s/RolingUpdateScreen.txt)
 
 ###	•	*Create a “Service” object which exposes Pods with application outside the K8S cluster in order to access each of the replicas through the single IP address/DNS name. 
@@ -139,7 +142,7 @@ k get poddisruptionbudgets # there is no pdb configured. Obviously.
 k apply -f pdb.yaml
 ```
 pdb.yaml placed [here](https://github.com/W1ckedS1ck/python-app/blob/main/pdb.yaml)
-Here is the result
+And here you can check the result
 | NAME   |   MIN AVAILABLE |  MAX UNAVAILABLE |  ALLOWED DISRUPTIONS |  AGE
 | ------ | ------ | ------ |------ | ------ |
 | wa3-pdb|   N/A         |    1             |    1                   |  13s
