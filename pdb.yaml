@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: wa3-pdb
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: wa3 #deploy/wa3????
