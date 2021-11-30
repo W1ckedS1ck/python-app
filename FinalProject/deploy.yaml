@@ -1,0 +1,20 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: wa3-deployment
+  labels:
+    app : wa3
+spec:
+  selector:
+    matchLabels:
+      project: wa3
+  template:
+    metadata:
+      labels:
+        project: wa3
+    spec:
+      containers:
+        - name : wa3
+          image: w1ckeds1ck/wa3
+          ports:
+            - containerPort: 8080
