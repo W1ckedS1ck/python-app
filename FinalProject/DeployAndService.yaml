@@ -18,3 +18,25 @@ spec:
           image: w1ckeds1ck/wa3
           ports:
             - containerPort: 8080
+            
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: wa3
+  name: wa3
+#  namespace: default
+spec:
+  ports:
+  - nodePort: 31770
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: wa3
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
