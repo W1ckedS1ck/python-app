@@ -11,7 +11,7 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/W1ckedS1ck/python-app.git'
+        sh 'git clone https://github.com/W1ckedS1ck/python-app.git'
       }
     }
 
