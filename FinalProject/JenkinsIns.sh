@@ -1,3 +1,6 @@
+#https://www.jenkins.io/doc/book/installing/kubernetes/
+#!/bin/bash
+
 kubectl create namespace jenkins
 helm repo add jenkinsci https://charts.jenkins.io
 helm repo update
