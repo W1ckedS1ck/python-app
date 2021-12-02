@@ -5,7 +5,7 @@ credentials:
       - usernamePassword:
           description: "dockerhublogin"
           id: "dockerhublogin"
-          password: "{AQAAABAAAAAQzE0G0DqHMgNtzotqG8+7jubRiMIVcyrTrNV6YoGEjj0=}"
+          password: "{AQAAABAAAAAQ8YZJyGn91hkBQcSASxXfwG+NyWzg2nD7ddRKMDhaJz0=}"
           scope: GLOBAL
           username: "w1ckeds1ck"
       - kubeconfig:
@@ -42,14 +42,14 @@ jenkins:
           - envVar:
               key: "JENKINS_URL"
               value: "http://jenkins.jenkins.svc.cluster.local:8080/"
-          image: "jenkins/inbound-agent:4.11-1"
+          image: "mynaniag/jenkins-slave:latest"
           name: "jnlp"
           resourceLimitCpu: "512m"
           resourceLimitMemory: "512Mi"
           resourceRequestCpu: "512m"
           resourceRequestMemory: "512Mi"
           workingDir: "/home/jenkins/agent"
-        id: "e9439390bbcb5b752c710a85daab2fad486d17ce9d1093078a024a15f20aa4ab"
+        id: "285de504143d70847acd05d931c27aecc534603d6fee2597ba6b41bcf5048f96"
         label: "jenkins-jenkins-agent"
         name: "default"
         nodeUsageMode: NORMAL
@@ -57,6 +57,10 @@ jenkins:
         serviceAccount: "default"
         slaveConnectTimeout: 100
         slaveConnectTimeoutStr: "100"
+        volumes:
+        - hostPathVolume:
+            hostPath: "/var/run/docker.sock"
+            mountPath: "/var/run/docker.sock"
         yamlMergeStrategy: "override"
   crumbIssuer:
     standard:
@@ -105,6 +109,8 @@ security:
     creationOfLegacyTokenEnabled: false
     tokenGenerationOnCreationEnabled: false
     usageStatisticsEnabled: true
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: true
   sSHD:
     port: -1
 unclassified:
