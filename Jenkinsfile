@@ -37,7 +37,7 @@ pipeline {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" Deployment.yaml'
+          sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" DeployAndService.yaml'
           kubernetesDeploy(configs: "Deployment.yaml", kubeconfigId: "kubernetes")
         }
       }
