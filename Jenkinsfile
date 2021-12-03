@@ -8,21 +8,19 @@ pipeline {
   agent any
 
   stages {
-
     stage('Checkout Source') {
       steps {
         sh 'git clone https://github.com/W1ckedS1ck/python-app.git'
       }
     }
-
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build dockerimagename
+          sh 'sed -i -e "s/<TAG>/${BUILD_NUMBER:=1}/g" application/demo/views.py'
+          dockerImage = docker.build dockerimagename + ":$BUILD_NUMBER" 
         }
       }
     }
-
     stage('Pushing Image') {
       environment {
                registryCredential = 'dockerhublogin'
@@ -30,26 +28,18 @@ pipeline {
       steps{
         script {
           docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("latest")
+            dockerImage.push("$BUILD_NUMBER") 
+            dockerImage.push("latest") 
           }
         }
       }
     }
-
-    stage('Deploying / rollout App to Kubernetes') {
+    stage('Deploying App to Kubernetes') {
       steps {
-                        sh 'echo "Starting Deployment / Rollout"'
-                    sh '''
-                        if kubectl get deployments | grep wa3
-                        then
-                            kubectl set image deploy/wa3 wa3=w1ckeds1ck/wa3:latest
-                            kubectl rollout restart deployment wa3
-                        else
-                            script {
-                                kubernetesDeploy(configs:"DeployAndService.yaml", kubeconfigId:"kubernetes")
-                            }
-                        fi
-                    '''
+        script {
+          sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" Deployment.yaml'
+          kubernetesDeploy(configs: "Deployment.yaml", kubeconfigId: "kubernetes")
+        }
       }
     }
   }
