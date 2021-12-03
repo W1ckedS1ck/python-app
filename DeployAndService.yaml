@@ -27,16 +27,11 @@ metadata:
   labels:
     app: wa3
   name: wa3
-#  namespace: default
 spec:
+  type: ClusterIP
   ports:
-  - nodePort: 31770
-    port: 8080
+  - port: 9999
     protocol: TCP
     targetPort: 8080
   selector:
     app: wa3
-  sessionAffinity: None
-  type: NodePort
-status:
-  loadBalancer: {}
