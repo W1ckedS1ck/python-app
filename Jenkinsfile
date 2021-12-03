@@ -40,11 +40,10 @@ pipeline {
       steps {
                         sh 'echo "Starting Deployment / Rollout"'
                     sh '''
-                        sudo su
                         if kubectl get deployments | grep wa3
                         then
                             kubectl set image deploy/wa3 wa3=w1ckeds1ck/wa3:latest
-                            kubectl rollout restart deployment ams
+                            kubectl rollout restart deployment wa3
                         else
                             script {
                                 kubernetesDeploy(configs: "DeployAndService.yaml", kubeconfigId: "kubernetes")
