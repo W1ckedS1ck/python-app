@@ -38,7 +38,7 @@ pipeline {
       steps {
         script {
           sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" DeployAndService.yaml'
-          kubernetesDeploy(configs: "Deployment.yaml", kubeconfigId: "kubernetes")
+          kubernetesDeploy(configs: "DeployAndService.yaml", kubeconfigId: "kubernetes")
         }
       }
     }
