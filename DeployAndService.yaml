@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name : wa3
-          image: w1ckeds1ck/wa3
+          image: w1ckeds1ck/wa3:<TAG>
           ports:
             - containerPort: 8080
             
