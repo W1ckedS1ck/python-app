@@ -46,7 +46,7 @@ pipeline {
                             kubectl rollout restart deployment wa3
                         else
                             script {
-                                kubernetesDeploy(configs: "DeployAndService.yaml", kubeconfigId: "kubernetes")
+                                kubernetesDeploy(configs:"DeployAndService.yaml", kubeconfigId:"kubernetes")
                             }
                         fi
                     '''
