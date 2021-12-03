@@ -5,6 +5,7 @@ metadata:
   labels:
     app : wa3
 spec:
+  replicas: 3
   selector:
     matchLabels:
       project: wa3
