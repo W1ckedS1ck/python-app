@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2021-10-24T10:46:55Z"
+  creationTimestamp: "2021-12-02T15:14:17Z"
   labels:
     app: wa3
   managedFields:
@@ -13,7 +13,6 @@ metadata:
           .: {}
           f:app: {}
       f:spec:
-        f:externalTrafficPolicy: {}
         f:ports:
           .: {}
           k:{"port":8080,"protocol":"TCP"}:
@@ -23,29 +22,26 @@ metadata:
             f:targetPort: {}
         f:selector:
           .: {}
-          f:app: {}
+          f:project: {}
         f:sessionAffinity: {}
         f:type: {}
     manager: kubectl-expose
     operation: Update
-    time: "2021-10-24T10:46:55Z"
-  name: wa3
+    time: "2021-12-02T15:14:17Z"
+  name: wa3-deployment
   namespace: default
-  resourceVersion: "2320"
-  uid: c186f75b-cddb-4e38-9e1d-2b2e250d529e
+  resourceVersion: "223302"
+  selfLink: /api/v1/namespaces/default/services/wa3-deployment
+  uid: 10129fb9-5c3a-49dd-85ab-89d8a9ce2a20
 spec:
-  clusterIP: 10.102.6.75
-  clusterIPs:
-  - 10.102.6.75
-  externalTrafficPolicy: Cluster
+  clusterIP: 10.233.52.193
   ports:
-  - nodePort: 31770
-    port: 8080
+  - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
-    app: wa3
+    project: wa3
   sessionAffinity: None
-  type: NodePort
+  type: ClusterIP
 status:
   loadBalancer: {}
