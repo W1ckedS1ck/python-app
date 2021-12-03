@@ -38,8 +38,9 @@ pipeline {
 
     stage('Deploying / rollout App to Kubernetes') {
       steps {
-                        sh 'echo "Starting ams Deployment"'
+                        sh 'echo "Starting Deployment / Rollout"'
                     sh '''
+                        sudo su
                         if kubectl get deployments | grep wa3
                         then
                             kubectl set image deploy/wa3 wa3=w1ckeds1ck/wa3:latest
