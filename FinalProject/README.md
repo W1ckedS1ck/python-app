@@ -71,26 +71,26 @@ app
 git clone https://github.com/ingvar-goryainov/python-app
 docker run -d -p 80:8080 1c0cc3f1a85f python3 -m demo
 ```
-But i will performed automatically.
+But i will performed automatically.  
 • Build in Docker image  
 Dockerfile will figure it out. It is located at the root of the folder.  
 • Store image in Repository Manager  
-Sure. At the Docker.hub.
+Sure. At the Docker.hub.  
 • Use YAML-manifests or custom Helm chart for deploying application
 Jenkins Pipeline, your turn! Devops don't need it to do! 
 
 ### 2. Organize “Rolling Update” strategy.
-Deployment is ready to go by DeployAndService.yaml.
+Deployment is ready to go by DeployAndService.yaml.  
 but if we will be able to get an artifact -   
-k set image deploy/wa3 wa3=w1ckeds1ck/wa3:<TAG>
+k set image deploy/wa3 wa3=w1ckeds1ck/wa3:<TAG>  
 #### *Use “Blue-Green” or “Canary” strategy for deployment
 
 #### *Spin up HA Kafka cluster in K8S
 > Note: https://betterprogramming.pub/how-to-run-highly-available-kafka-on-kubernetes-a1824db8a3e2  
 
-helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-curl https://raw.githubusercontent.com/helm/charts/master/incubator/kafka/values.yaml > values.yaml
-helm install kafka incubator/kafka -f values.yaml
+helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator  
+curl https://raw.githubusercontent.com/helm/charts/master/incubator/kafka/values.yaml > values.yaml  
+helm install kafka incubator/kafka -f values.yaml  
 
 #### *Write pipeline for deploying application https://github.com/etycomputer/website-metric-producer
 #### *Organize strategy for redeploy application
