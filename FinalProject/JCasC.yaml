@@ -1,183 +1,45 @@
-credentials:
-  system:
-    domainCredentials:
-    - credentials:
-      - usernamePassword:
-          description: "dockerhublogin"
-          id: "dockerhublogin"
-          password: "{AQAAABAAAAAQ8YZJyGn91hkBQcSASxXfwG+NyWzg2nD7ddRKMDhaJz0=}"
-          scope: GLOBAL
-          username: "w1ckeds1ck"
-      - kubeconfig:
-          description: "kubernetes"
-          id: "kubernetes"
-          kubeconfigSource:
-            directEntry:
-              content: |-
-                ****
-          scope: GLOBAL
-jenkins:
-  agentProtocols:
-  - "JNLP4-connect"
-  - "Ping"
-  authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: false
-  clouds:
-  - kubernetes:
-      containerCap: 10
-      containerCapStr: "10"
-      jenkinsTunnel: "jenkins-agent.jenkins.svc.cluster.local:50000"
-      jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
-      name: "kubernetes"
-      namespace: "jenkins"
-      podLabels:
-      - key: "jenkins/jenkins-jenkins-agent"
-        value: "true"
-      serverUrl: "https://kubernetes.default"
-      templates:
-      - containers:
-        - args: "^${computer.jnlpmac} ^${computer.name}"
-          envVars:
-          - envVar:
-              key: "JENKINS_URL"
-              value: "http://jenkins.jenkins.svc.cluster.local:8080/"
-          image: "mynaniag/jenkins-slave:latest"
-          name: "jnlp"
-          resourceLimitCpu: "512m"
-          resourceLimitMemory: "512Mi"
-          resourceRequestCpu: "512m"
-          resourceRequestMemory: "512Mi"
-          workingDir: "/home/jenkins/agent"
-        id: "285de504143d70847acd05d931c27aecc534603d6fee2597ba6b41bcf5048f96"
-        label: "jenkins-jenkins-agent"
-        name: "default"
-        nodeUsageMode: NORMAL
-        podRetention: "never"
-        serviceAccount: "default"
-        slaveConnectTimeout: 100
-        slaveConnectTimeoutStr: "100"
-        volumes:
-        - hostPathVolume:
-            hostPath: "/var/run/docker.sock"
-            mountPath: "/var/run/docker.sock"
-        yamlMergeStrategy: "override"
-  crumbIssuer:
-    standard:
-      excludeClientIPFromCrumb: true
-  disableRememberMe: false
-  labelAtoms:
-  - name: "jenkins-jenkins-agent"
-  - name: "master"
-  markupFormatter: "plainText"
-  mode: NORMAL
-  myViewsTabBar: "standard"
-  numExecutors: 0
-  primaryView:
-    all:
-      name: "all"
-  projectNamingStrategy: "standard"
-  quietPeriod: 5
-  remotingSecurity:
-    enabled: true
-  scmCheckoutRetryCount: 0
-  securityRealm:
-    local:
-      allowsSignup: false
-      enableCaptcha: false
-      users:
-      - id: "admin"
-        name: "Jenkins Admin"
-        properties:
-        - "apiToken"
-        - "mailer"
-        - "myView"
-        - preferredProvider:
-            providerId: "default"
-        - "timezone"
-  slaveAgentPort: 50000
-  updateCenter:
-    sites:
-    - id: "default"
-      url: "https://updates.jenkins.io/update-center.json"
-  views:
-  - list:
-      columns:
-      - "status"
-      - "weather"
-      - "jobName"
-      - "lastSuccess"
-      - "lastFailure"
-      - "lastDuration"
-      - "buildButton"
-      - "itemColumn"
-      - "descriptionColumn"
-      jobNames:
-      - "Deploy to k8s"
-      name: "MyView"
-  - all:
-      name: "all"
-  viewsTabBar: "standard"
-security:
-  apiToken:
-    creationOfLegacyTokenEnabled: false
-    tokenGenerationOnCreationEnabled: false
-    usageStatisticsEnabled: true
-  globalJobDslSecurityConfiguration:
-    useScriptSecurity: true
-  sSHD:
-    port: -1
-unclassified:
-  appInsightsGlobalConfig:
-    appInsightsEnabled: true
-  buildDiscarders:
-    configuredBuildDiscarders:
-    - "jobBuildDiscarder"
-  fingerprints:
-    fingerprintCleanupDisabled: false
-    storage: "file"
-  gitHubPluginConfig:
-    hookUrl: "http://jenkins:8080/github-webhook/"
-  gitSCM:
-    addGitTagAction: false
-    allowSecondFetch: false
-    createAccountBasedOnEmail: false
-    disableGitToolChooser: false
-    hideCredentials: false
-    showEntireCommitSummaryInChanges: false
-    useExistingAccountWithSameEmail: false
-  junitTestResultStorage:
-    storage: "file"
-  location:
-    adminAddress: "address not configured yet <nobody@nowhere>"
-    url: "http://jenkins:8080/"
-  mailer:
-    charset: "UTF-8"
-    useSsl: false
-    useTls: false
-  pollSCM:
-    pollingThreadCount: 10
-  prometheusConfiguration:
-    appendParamLabel: false
-    appendStatusLabel: false
-    collectDiskUsage: true
-    collectingMetricsPeriodInSeconds: 120
-    countAbortedBuilds: true
-    countFailedBuilds: true
-    countNotBuiltBuilds: true
-    countSuccessfulBuilds: true
-    countUnstableBuilds: true
-    defaultNamespace: "default"
-    fetchTestResults: true
-    jobAttributeName: "jenkins_job"
-    path: "prometheus"
-    processingDisabledBuilds: false
-    useAuthenticatedEndpoint: false
-tool:
-  git:
-    installations:
-    - home: "git"
-      name: "Default"
-  mavenGlobalConfig:
-    globalSettingsProvider: "standard"
-    settingsProvider: "standard"
+ JCasC:
+    defaultConfig: true
+    configScripts:
+     welcome-message: |
+        jenkins:
+          systemMessage: This is my pipeline job from github to k8 deploy/rollout!
+     jenkins-casc-configs: |
+       credentials:
+         system:
+           domainCredentials:
+           - credentials:
+              - usernamePassword:
+                  description: "github access username password"
+                  id: "github"
+                  username: 
+                  password: 
+                  scope: GLOBAL
+              - usernamePassword:
+                  description: "dockerhub access username password"
+                  id: "dockerhublogin"
+                  username: 
+                  password: #
+                  scope: GLOBAL
+     pipeline-job: | 
+        jobs:
+          - script: >   
+              pipelineJob('Deploy to k8s') {
+                triggers {
+                    githubPush()
+                }
+                definition {
+                  cpsScm {
+                    scm {
+                      git {
+                        remote {
+                          url('https://github.com/W1ckedS1ck/python-app.git')
+                        }
+                        branch('*/main')
+                      }
+                    }
+                    scriptPath("Jenkinsfile")
+                    lightweight()
+                  }
+                }
+              }
