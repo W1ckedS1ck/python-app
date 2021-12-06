@@ -233,11 +233,12 @@ controller:
     - kubernetes:1.30.1
     - workflow-aggregator:2.6
     - git:4.9.0
-    - configuration-as-code:1.54
-    - kubernetes-cd:1.0.0
     - github:1.34.1
     - docker-workflow:1.26
     - job-dsl:1.78.1
+    - configuration-as-code:1.54
+    - kubernetes-cd:1.0.0
+
 
   # Set to false to download the minimum required version of all dependencies.
   installLatestPlugins: true
@@ -317,13 +318,48 @@ controller:
     # Ignored if securityRealm is defined in controller.JCasC.configScripts and
     # ignored if controller.enableXmlConfig=true as controller.securityRealm takes precedence
     securityRealm: |-
-      local:
-        allowsSignup: false
-        enableCaptcha: false
-        users:
-        - id: "${chart-admin-username}"
-          name: "Jenkins Admin"
-          password: "${chart-admin-password}"
+     jenkins-casc-configs: |
+#       credentials:
+#         system:
+#           domainCredentials:
+#           - credentials:
+#             - usernamePassword:
+#                 description: "dockerhublogin"
+#                 id: "dockerhublogin"
+#                 password: "{AQAAABAAAAAQzE0G0DqHMgNtzotqG8+7jubRiMIVcyrTrNV6YoGEjj0=}"
+#                 scope: GLOBAL
+#                 username: "w1ckeds1ck"
+#             - kubeconfig:
+#                 description: "kubernetes"
+#                 id: "kubernetes"
+#                 kubeconfigSource:
+#                   directEntry:
+#                     content: |-
+#                       ****
+#                 scope: GLOBAL
+     pipeline-job: | 
+        jobs:
+          - script: >   
+              pipelineJob('JobDeployment') {
+                triggers {
+                    githubPush()
+                }
+                definition {
+                  cpsScm {
+                    scm {
+                      git {
+                        remote {
+                          url('https://github.com/Mynaniag/final_project.git')
+                          credentials('github')
+                        }
+                        branch('*/main')
+                      }
+                    }
+                    scriptPath("Jenkinsfile")
+                    lightweight()
+                  }
+                }
+              }
     # Ignored if authorizationStrategy is defined in controller.JCasC.configScripts
     authorizationStrategy: |-
       loggedInUsersCanDoAnything:
