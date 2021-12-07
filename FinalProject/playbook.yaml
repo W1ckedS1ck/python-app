@@ -1,0 +1,83 @@
+# k8s won't work with ansible 
+---
+- name: 
+  become: true 
+  copy:
+    src: /Users/vitalik/Desktop/PlayProject
+    dest: /home/vitalik/
+    owner: vitalik
+    group: vitalik        
+    mode: 0777
+    # https://stackoverflow.com/questions/60866755/ansible-k8s-module-failed-to-import-the-required-python-library-openshift-on
+- name: Reqirements installation # K8s.core won't work without openshift
+  ignore_errors: yes
+  shell: |
+    pip3 install openshift pyyaml kubernetes
+- name: Add ns jenkins
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Namespace
+    name: jenkins
+    state: present
+- name: Add Jenkins repository
+  kubernetes.core.helm_repository:
+    name: jenkinsci
+    repo_url: "https://charts.jenkins.io"
+- name: Setup Jenkins PV
+  kubernetes.core.k8s:
+    state: present
+    src: /home/vitalik/jenkins-volume.yaml
+- name: Create Jenkins SA
+  kubernetes.core.k8s:
+    state: present
+    src: /home/vitalik/jenkins-sa.yaml
+- name: Install jenkis by HELM
+  kubernetes.core.helm:
+    name: jenkins
+    chart_ref: jenkinsci/jenkins
+    release_namespace: jenkins
+    values_files:
+      - /home/vitalik/jenkins-values.yaml
+- name: Apply ingress-jenkins nginx
+  kubernetes.core.k8s:
+    state: present
+    src: /home/vitalik/jenkins-ingress.yaml
+- name: Set ingress controller
+  ignore_errors: yes
+  kubernetes.core.k8s:
+    state: present
+    src: /home/vitalik/config-all.yaml
+- name: Apply config map for ingress controller
+  kubernetes.core.k8s:
+    state: present
+    src: /home/vitalik/services.yaml
+- name: Add prom repository
+  kubernetes.core.helm_repository:
+    name: prometheus-community
+    repo_url: "https://prometheus-community.github.io/helm-charts"
+- name: Add ns monitoring
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Namespace
+    name: monitoring
+    state: present
+- name: Add etcd-certs as generic kubersecret
+  ignore_errors: yes
+  shell: | 
+    kubectl create secret generic etcd-certs -nmonitoring \
+    --from-file=/etc/ssl/etcd/ssl/ca.pem \
+    --from-file=/etc/ssl/etcd/ssl/node-node1-key.pem \
+    --from-file=/etc/ssl/etcd/ssl/node-node1.pem
+- name: Install prom by HELM
+  ignore_errors: yes
+  shell: | 
+    helm install -f /home/vitali/values.yaml prometheus -n monitoring prometheus-community/kube-prometheus-stack \
+    --set prometheusOperator.createCustomResource=false \
+    --set kubeEtcd.serviceMonitor.scheme=https \
+    --set kubeEtcd.serviceMonitor.caFile=/etc/prometheus/secrets/etcd-certs/ca.pem \
+    --set kubeEtcd.serviceMonitor.certFile=/etc/prometheus/secrets/etcd-certs/node-node1.pem \
+    --set kubeEtcd.serviceMonitor.keyFile=/etc/prometheus/secrets/etcd-certs/node-node1-key.pem \
+    --set prometheus.prometheusSpec.secrets={etcd-certs}
+    
+  # path can be changed byhimself for some reason. May be $HOSTNAME will solve it.
+...
