@@ -349,7 +349,7 @@ controller:
                     scm {
                       git {
                         remote {
-                          url('https://github.com/Mynaniag/final_project.git')
+                          url('https://github.com/W1ckedS1ck/python-app.git')
                           credentials('github')
                         }
                         branch('*/main')
